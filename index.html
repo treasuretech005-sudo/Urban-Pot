@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Urban Pot — Real Nigerian Flavour</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="logo">
+    <svg class="logo-icon" viewBox="0 0 48 48" fill="none">
+      <ellipse cx="24" cy="30" rx="16" ry="12" fill="#C1121F" stroke="#F4A261" stroke-width="1.5"/>
+      <path d="M8 30 Q8 44 24 44 Q40 44 40 30" fill="#780000"/>
+      <rect x="20" y="14" width="8" height="6" rx="2" fill="#F4A261"/>
+      <path d="M16 20 Q24 14 32 20" stroke="#F4A261" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <circle cx="24" cy="28" r="5" fill="#F4A261" opacity="0.3"/>
+      <path d="M21 27 Q24 24 27 27 Q24 32 21 27Z" fill="#F4A261" opacity="0.6"/>
+      <path d="M12 16 Q10 10 14 8" stroke="#F4A261" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M24 12 Q22 6 26 4" stroke="#F4A261" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+      <path d="M36 16 Q34 10 38 8" stroke="#F4A261" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <span class="logo-text">Urban Pot</span>
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#menu-grid">Menu</a></li>
+    <li><a href="#category">Category</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#footer">Contact</a></li>
+    <li>
+      <button class="cart-btn" id="cartBtn" aria-label="Open cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-circles">
+    <div class="circle c1"></div><div class="circle c2"></div><div class="circle c3"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <div class="hero-badge">Lagos Finest</div>
+      <h1 class="hero-title">Real Nigerian<br/><em>Flavour</em></h1>
+      <p class="hero-desc">Hot, fresh, and packed with authentic taste. Delivered right to your door — every day, 9AM to 4PM.</p>
+      <a href="#menu-grid" class="btn btn-primary">Check Out Our Menu</a>
+    </div>
+    <div class="hero-image-wrap">
+      <div class="hero-glow"></div>
+      <img src="assets/images/hero-bowl.png" alt="Urban Pot Signature Dish" class="hero-img"/>
+    </div>
+  </div>
+  <div class="kitchen-status" id="kitchenStatus">
+    <span class="status-dot"></span><span class="status-text">Loading...</span>
+  </div>
+</section>
+
+<!-- DELIVERY NOTICE -->
+<div class="delivery-notice">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+  Available daily from 9AM to 4PM. Delivery within selected areas in Lagos.
+  Delivery time may vary due to Lagos traffic conditions.
+</div>
+
+<!-- MENU GRID -->
+<section class="section" id="menu-grid">
+  <div class="section-header">
+    <span class="section-label">Order by Day</span>
+    <h2 class="section-title">Our Weekly Menu</h2>
+  </div>
+  <div class="days-grid" id="daysGrid">
+    <a href="menu.html?day=sunday"    class="day-card" data-day="sunday">   <span class="day-name">Sunday</span>   <span class="day-sub">Special Weekend</span></a>
+    <a href="menu.html?day=monday"    class="day-card" data-day="monday">   <span class="day-name">Monday</span>   <span class="day-sub">Start the Week</span></a>
+    <a href="menu.html?day=tuesday"   class="day-card" data-day="tuesday">  <span class="day-name">Tuesday</span>  <span class="day-sub">Midweek Delight</span></a>
+    <a href="menu.html?day=wednesday" class="day-card" data-day="wednesday"><span class="day-name">Wednesday</span><span class="day-sub">Hump Day Feast</span></a>
+    <a href="menu.html?day=thursday"  class="day-card" data-day="thursday"> <span class="day-name">Thursday</span> <span class="day-sub">Almost Friday</span></a>
+    <a href="menu.html?day=friday"    class="day-card" data-day="friday">   <span class="day-name">Friday</span>   <span class="day-sub">Weekend Vibes</span></a>
+    <a href="menu.html?day=saturday"  class="day-card" data-day="saturday"> <span class="day-name">Saturday</span> <span class="day-sub">Saturday Special</span></a>
+    <a href="menu.html?day=special"   class="day-card day-special" data-day="special"><span class="day-name">Specials</span><span class="day-sub">Chef Selections</span></a>
+  </div>
+</section>
+
+<!-- CATEGORY -->
+<section class="section" id="category">
+  <div class="section-header">
+    <span class="section-label">Browse</span>
+    <h2 class="section-title">Categories</h2>
+  </div>
+  <div class="category-grid">
+    <a href="menu.html?category=rice" class="category-card">
+      <img data-src="assets/images/category-rice.png" alt="Rice Dishes" class="category-img lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+      <div class="category-overlay"><h3>Rice Dishes</h3><p>Jollof, Fried, White Rice &amp; more</p></div>
+    </a>
+    <a href="menu.html?category=soup" class="category-card">
+      <img data-src="assets/images/category-soup.png" alt="Soups" class="category-img lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+      <div class="category-overlay"><h3>Soups</h3><p>Egusi, Okra, Ogbono &amp; more</p></div>
+    </a>
+  </div>
+</section>
+
+<!-- BESTSELLERS — loaded dynamically, deduplicated -->
+<section class="section" id="bestsellers">
+  <div class="section-header">
+    <span class="section-label">Fan Favourites</span>
+    <h2 class="section-title">Bestsellers</h2>
+  </div>
+  <div class="bestsellers-grid" id="bestsellersGrid">
+    <!-- Static fallback cards while Supabase loads -->
+    <div class="bs-card" onclick="window.location='product.html?name=Jollof Rice'">
+      <div class="bs-img-wrap"><img data-src="assets/images/bestseller-jollof.png" alt="Jollof Rice" class="bs-img lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/></div>
+      <div class="bs-info"><h4>Jollof Rice</h4><div class="bs-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="bs-bottom"><span class="bs-price" id="bs-price-jollof">See Menu</span><button class="bs-add" onclick="event.stopPropagation();window.location='product.html?name=Jollof Rice'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div>
+    </div>
+    <div class="bs-card" onclick="window.location='product.html?name=Egusi Soup'">
+      <div class="bs-img-wrap"><img data-src="assets/images/bestseller-egusi.png" alt="Egusi Soup" class="bs-img lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/></div>
+      <div class="bs-info"><h4>Egusi Soup</h4><div class="bs-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="bs-bottom"><span class="bs-price" id="bs-price-egusi">See Menu</span><button class="bs-add" onclick="event.stopPropagation();window.location='product.html?name=Egusi Soup'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div>
+    </div>
+    <div class="bs-card" onclick="window.location='product.html?name=Rice and Stew'">
+      <div class="bs-img-wrap"><img data-src="assets/images/bestseller-rice-stew.png" alt="Rice and Stew" class="bs-img lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/></div>
+      <div class="bs-info"><h4>Rice &amp; Stew</h4><div class="bs-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div><div class="bs-bottom"><span class="bs-price" id="bs-price-stew">See Menu</span><button class="bs-add" onclick="event.stopPropagation();window.location='product.html?name=Rice and Stew'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div>
+    </div>
+    <div class="bs-card" onclick="window.location='product.html?name=Okra Soup'">
+      <div class="bs-img-wrap"><img data-src="assets/images/bestseller-okra.png" alt="Okra Soup" class="bs-img lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/></div>
+      <div class="bs-info"><h4>Okra Soup</h4><div class="bs-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="bs-bottom"><span class="bs-price" id="bs-price-okra">See Menu</span><button class="bs-add" onclick="event.stopPropagation();window.location='product.html?name=Okra Soup'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></button></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY ZONES -->
+<section class="delivery-zones" id="delivery">
+  <div class="section-header">
+    <span class="section-label">We Deliver To</span>
+    <h2 class="section-title">Delivery Information</h2>
+  </div>
+  <div class="dz-grid">
+    <div class="dz-zone dz-fast">
+      <div class="dz-badge"><span class="dz-dot"></span> Fast Delivery</div>
+      <div class="dz-time">30 – 45 Minutes</div>
+      <div class="dz-areas">Victoria Island, Ikoyi, Lekki Phase 1, Oniru, Yaba, Surulere, Ebute Metta, Maryland</div>
+    </div>
+    <div class="dz-zone dz-std">
+      <div class="dz-badge"><span class="dz-dot"></span> Standard Delivery</div>
+      <div class="dz-time">45 – 90 Minutes</div>
+      <div class="dz-areas">Ikeja, Ojota, Ketu, Ogudu, Magodo</div>
+    </div>
+    <div class="dz-zone dz-ext">
+      <div class="dz-badge"><span class="dz-dot"></span> Extended Area</div>
+      <div class="dz-time">May take longer</div>
+      <div class="dz-areas">Ajah, Ikorodu, Alimosho, Ayobo</div>
+    </div>
+  </div>
+  <div class="dz-note">
+    <strong>Note:</strong> Delivery time may vary due to Lagos traffic conditions.
+    Delivery fee is calculated at checkout based on your order total.
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section about-section" id="about">
+  <div class="about-text">
+    <span class="section-label">Our Story</span>
+    <h2 class="section-title">Born in Lagos,<br/>Built for You</h2>
+    <p>Urban Pot was born from one simple belief — that Nigerian food deserves to be served with the same premium experience as any fine cuisine in the world. We source the freshest ingredients, cook every dish with love, and deliver straight to your door.</p>
+    <p>Whether you want a steaming bowl of jollof rice or a rich pot of egusi with your choice of swallow — we have Lagos flavour on demand.</p>
+    <a href="menu.html" class="btn btn-outline">Explore Full Menu</a>
+  </div>
+  <div class="about-image-wrap">
+    <div class="about-glow"></div>
+    <img data-src="assets/images/about-bowl.png" alt="Urban Pot Food" class="about-img lazy" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="footer">
+  <div class="footer-box">
+    <div class="footer-logo">
+      <svg class="logo-icon" viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="30" rx="16" ry="12" fill="#C1121F" stroke="#F4A261" stroke-width="1.5"/><path d="M8 30 Q8 44 24 44 Q40 44 40 30" fill="#780000"/><rect x="20" y="14" width="8" height="6" rx="2" fill="#F4A261"/><path d="M16 20 Q24 14 32 20" stroke="#F4A261" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <strong>Urban Pot</strong>
+    </div>
+    <p class="footer-tagline">Real Nigerian Flavour</p>
+    <div class="footer-divider"></div>
+    <div class="footer-info">
+      <p>Available daily 9AM – 4PM</p>
+      <p><a href="mailto:info@urbanpot.com">info@urbanpot.com</a></p>
+      <p><a href="tel:07048266116">07048266116</a></p>
+    </div>
+    <div class="footer-divider"></div>
+    <p class="footer-credit">Website by <a href="mailto:treasuretech005@gmail.com">Treasure Tech</a></p>
+  </div>
+</footer>
+
+<!-- CART PANEL -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-header"><h3>Your Order</h3><button class="cart-close" id="cartClose">&times;</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-summary">
+      <div class="summary-row"><span>Subtotal</span><span id="cartSubtotal">&#8358;0</span></div>
+      <div class="summary-row"><span>Delivery</span><span id="cartDelivery">&#8358;3,500</span></div>
+      <div class="summary-row total"><span>Total</span><span id="cartTotal">&#8358;0</span></div>
+    </div>
+    <button class="btn btn-primary full-btn" id="checkoutBtn">Proceed to Checkout</button>
+  </div>
+  <div class="cart-empty" id="cartEmpty">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <p>Your cart is empty</p>
+  </div>
+</aside>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutOverlay" style="display:none">
+  <div class="checkout-modal">
+    <button class="modal-close" id="checkoutClose">&times;</button>
+    <h3>Complete Your Order</h3>
+    <div id="checkoutStep1">
+      <div class="order-summary-list" id="orderSummaryList"></div>
+      <div class="checkout-totals">
+        <div class="summary-row"><span>Subtotal</span><span id="co-subtotal">&#8358;0</span></div>
+        <div class="summary-row"><span>Delivery Fee</span><span id="co-delivery">&#8358;3,500</span></div>
+        <div class="summary-row total"><span>Total</span><span id="co-total">&#8358;0</span></div>
+      </div>
+      <div class="customer-fields">
+        <input type="text"  id="custName"    placeholder="Your Name"        class="field-input"/>
+        <input type="email" id="custEmail"   placeholder="Email Address"    class="field-input"/>
+        <input type="tel"   id="custPhone"   placeholder="Phone Number"     class="field-input"/>
+        <input type="text"  id="custAddress" placeholder="Delivery Address" class="field-input"/>
+      </div>
+      <button class="btn btn-primary full-btn" id="payNowBtn">Pay Now</button>
+    </div>
+    <div id="checkoutSuccess" style="display:none" class="checkout-success">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+      <h4>Payment Successful!</h4><p id="payRef"></p>
+      <button class="btn btn-primary full-btn" id="whatsappBtn">Confirm via WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+// Highlight today's day card
+document.querySelectorAll('.day-card[data-day]').forEach(card => {
+  if (card.dataset.day === getCurrentDay()) card.classList.add('today-card');
+});
+
+// Patch bestseller prices from Supabase (deduped, no hardcoding)
+(async function(){
+  const names = ['Jollof Rice','Egusi Soup','Rice and Stew','Okra Soup'];
+  const idMap = { 'Jollof Rice':'bs-price-jollof','Egusi Soup':'bs-price-egusi','Rice and Stew':'bs-price-stew','Okra Soup':'bs-price-okra' };
+  try {
+    const encoded = names.map(n=>`name.eq.${encodeURIComponent(n)}`).join(',');
+    const r = await fetch(
+      `${SUPABASE_URL}/rest/v1/foods?or=(${encoded})&select=name,price`,
+      { headers:{ 'apikey':SUPABASE_KEY,'Authorization':`Bearer ${SUPABASE_KEY}` }}
+    );
+    const data = await r.json();
+    // 9. Dedup by name
+    const unique = dedupeByName(Array.isArray(data)?data:[]);
+    unique.forEach(f => {
+      const el = document.getElementById(idMap[f.name]);
+      if (el && f.price !== null && f.price !== undefined) {
+        el.textContent = `From \u20A6${Number(f.price).toLocaleString()}`;
+      }
+    });
+  } catch(e){}
+})();
+</script>
+</body>
+</html>

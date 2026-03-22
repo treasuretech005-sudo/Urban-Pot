@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Product — Urban Pot</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="logo">
+    <svg class="logo-icon" viewBox="0 0 48 48" fill="none">
+      <ellipse cx="24" cy="30" rx="16" ry="12" fill="#C1121F" stroke="#F4A261" stroke-width="1.5"/>
+      <path d="M8 30 Q8 44 24 44 Q40 44 40 30" fill="#780000"/>
+      <rect x="20" y="14" width="8" height="6" rx="2" fill="#F4A261"/>
+      <path d="M16 20 Q24 14 32 20" stroke="#F4A261" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <circle cx="24" cy="28" r="5" fill="#F4A261" opacity="0.3"/>
+    </svg>
+    <span class="logo-text">Urban Pot</span>
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#menu-grid">Menu</a></li>
+    <li><a href="index.html#category">Category</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#footer">Contact</a></li>
+    <li>
+      <button class="cart-btn" id="cartBtn" aria-label="Open cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">Home</a>
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  <a href="menu.html" id="backToMenu">Menu</a>
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+  <span id="breadcrumbName">Product</span>
+</div>
+
+<div id="productLoading" class="product-loading">
+  <div class="spinner"></div><p>Loading product...</p>
+</div>
+
+<section class="product-section" id="productSection" style="display:none">
+  <div class="product-inner">
+
+    <div class="product-img-col">
+      <div class="product-img-wrap">
+        <div class="product-glow"></div>
+        <img id="productImg" src="" alt="" class="product-img"/>
+      </div>
+    </div>
+
+    <div class="product-info-col">
+      <span class="product-category-tag" id="productCategory"></span>
+      <h1 class="product-name" id="productName"></h1>
+      <p class="product-desc" id="productDesc"></p>
+      <!-- 1. Base price shown from food.price, never hardcoded -->
+      <div class="product-base-price" id="productPrice"></div>
+
+      <!-- 7. Day restriction -->
+      <div class="day-restrict-banner" id="dayRestrictBanner" style="display:none">
+        This item is not available today. You can only order today's menu.
+      </div>
+      <!-- 8. Closed: only disables buttons, doesn't hide food -->
+      <div class="closed-banner" id="closedBanner" style="display:none">
+        Orders are only accepted between 9AM and 4PM. Please come back during opening hours.
+      </div>
+
+      <div class="options-section" id="optionsSection">
+
+        <!-- SIZE (drinks) — only shown if quantity_options exists -->
+        <div class="option-group" id="sizeGroup" style="display:none">
+          <label class="option-label">Size</label>
+          <div class="liter-selector" id="sizeSelector"></div>
+        </div>
+
+        <!-- LITERS (food) — only shown if quantity_options exists -->
+        <div class="option-group" id="literGroup" style="display:none">
+          <label class="option-label">Quantity <span class="option-note">(Liters)</span></label>
+          <div class="liter-selector" id="literSelector"></div>
+        </div>
+
+        <!-- 3. PROTEIN QTY — only shown if protein_options exists & non-empty -->
+        <div class="option-group" id="proteinGroup" style="display:none">
+          <label class="option-label">Proteins <span class="option-note">(select quantities)</span></label>
+          <div class="protein-qty-grid" id="proteinQtyGrid"></div>
+        </div>
+
+        <!-- SWALLOW — only shown if swallow_options exists & non-empty -->
+        <div class="option-group" id="swallowGroup" style="display:none">
+          <label class="option-label">Choose Swallow</label>
+          <div class="swallow-grid" id="swallowGrid"></div>
+        </div>
+
+        <!-- PLATES — only shown for food (non-drink) -->
+        <div class="option-group" id="platesGroup" style="display:none">
+          <label class="option-label">Number of Plates</label>
+          <div class="quantity-ctrl">
+            <button class="qty-btn" id="qtyMinus">-</button>
+            <span class="qty-display" id="qtyDisplay">1</span>
+            <button class="qty-btn" id="qtyPlus">+</button>
+          </div>
+        </div>
+
+        <!-- 6. PRICE BREAKDOWN — always shown once options load -->
+        <div class="price-breakdown" id="priceBreakdown" style="display:none">
+          <div class="pb-row"><span>Base Price</span><span id="pbBase">&#8358;0</span></div>
+          <div id="pbProteinRows"></div>
+          <div class="pb-row total"><span>Total</span><span id="pbTotal">&#8358;0</span></div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="product-actions" id="productActions" style="display:none">
+          <button class="btn btn-outline" id="addToCartBtn">Add to Cart</button>
+          <button class="btn btn-primary" id="buyNowBtn">Buy Now</button>
+        </div>
+
+        <div id="unavailableNotice" style="display:none;color:rgba(255,255,255,.5);font-size:.9rem;margin-top:8px">
+          This item is currently unavailable for ordering.
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="productError" style="display:none" class="product-error">
+  <p>Product not found. <a href="menu.html">Back to Menu</a></p>
+</div>
+
+<!-- CART PANEL -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-header"><h3>Your Order</h3><button class="cart-close" id="cartClose">&times;</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-summary">
+      <div class="summary-row"><span>Subtotal</span><span id="cartSubtotal">&#8358;0</span></div>
+      <div class="summary-row"><span>Delivery</span><span id="cartDelivery">&#8358;3,500</span></div>
+      <div class="summary-row total"><span>Total</span><span id="cartTotal">&#8358;0</span></div>
+    </div>
+    <button class="btn btn-primary full-btn" id="checkoutBtn">Proceed to Checkout</button>
+  </div>
+  <div class="cart-empty" id="cartEmpty">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <p>Your cart is empty</p>
+  </div>
+</aside>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutOverlay" style="display:none">
+  <div class="checkout-modal">
+    <button class="modal-close" id="checkoutClose">&times;</button>
+    <h3>Complete Your Order</h3>
+    <div id="checkoutStep1">
+      <div class="order-summary-list" id="orderSummaryList"></div>
+      <div class="checkout-totals">
+        <div class="summary-row"><span>Subtotal</span><span id="co-subtotal">&#8358;0</span></div>
+        <div class="summary-row"><span>Delivery Fee</span><span id="co-delivery">&#8358;3,500</span></div>
+        <div class="summary-row total"><span>Total</span><span id="co-total">&#8358;0</span></div>
+      </div>
+      <div class="customer-fields">
+        <input type="text"  id="custName"    placeholder="Your Name"        class="field-input"/>
+        <input type="email" id="custEmail"   placeholder="Email Address"    class="field-input"/>
+        <input type="tel"   id="custPhone"   placeholder="Phone Number"     class="field-input"/>
+        <input type="text"  id="custAddress" placeholder="Delivery Address" class="field-input"/>
+      </div>
+      <button class="btn btn-primary full-btn" id="payNowBtn">Pay Now</button>
+    </div>
+    <div id="checkoutSuccess" style="display:none" class="checkout-success">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+      <h4>Payment Successful!</h4><p id="payRef"></p>
+      <button class="btn btn-primary full-btn" id="whatsappBtn">Confirm via WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+/* ═══════════════════════════════════════════════════════
+   URBAN POT — product.html  FINAL
+   All prices come from Supabase. Zero hardcoded prices.
+
+   Supabase columns read:
+     food.price            → fallback base price (plate)
+     food.protein_options  → [{ "name":"chicken", "price":2500 }, ...]
+     food.swallow_options  → [{ "name":"eba" }, ...]
+     food.quantity_options → [{ "name":"1L", "price":3000 }, ...]
+
+   Rules:
+     quantity name contains "L"  → liter food → liter selector + plates counter
+     quantity name is other      → unit (bottle/wrap/pack) → unit counter, NO plates
+     quantity_options is null    → plates counter only, use food.price
+     protein_options  is null    → hide protein section
+     swallow_options  is null    → hide swallow section
+     category = "special"        → always orderable if kitchen open
+═══════════════════════════════════════════════════════ */
+
+/* ─── STATE ─────────────────────────────────────────── */
+let currentFood      = null;
+let selectedQty      = null;   // { name, price }
+let selectedSwallow  = null;   // string
+let plates           = 1;      // plates or units
+let selectedProteins = {};     // { chicken: 2, beef: 1 }
+
+/* ─── HELPERS ────────────────────────────────────────── */
+function fmtN(n) {
+  return '\u20A6' + Number(n).toLocaleString('en-NG');
+}
+
+function cap(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// Safely parse a Supabase JSONB column
+// Handles: already-parsed array/object, JSON string, null
+function parseCol(val) {
+  if (!val) return null;
+  if (Array.isArray(val)) return val.length ? val : null;
+  if (typeof val === 'string') {
+    try {
+      const p = JSON.parse(val);
+      if (Array.isArray(p)) return p.length ? p : null;
+      return p || null;
+    } catch { return null; }
+  }
+  if (typeof val === 'object') return val;
+  return null;
+}
+
+// Is this a liter option? e.g. "1L", "2L", "5L"
+function isLiter(name) {
+  return /^\d+L$/i.test(String(name).trim());
+}
+
+/* ─── FETCH ──────────────────────────────────────────── */
+(async function () {
+  const params = new URLSearchParams(window.location.search);
+  const id     = params.get('id');
+  const name   = params.get('name');
+
+  let food = null;
+  try {
+    const qs = id
+      ? 'id=eq.' + id
+      : 'name=eq.' + encodeURIComponent(name);
+    const r = await fetch(
+      SUPABASE_URL + '/rest/v1/foods?' + qs + '&select=*',
+      { headers: { apikey: SUPABASE_KEY, Authorization: 'Bearer ' + SUPABASE_KEY } }
+    );
+    const data = await r.json();
+    food = Array.isArray(data) ? data[0] : null;
+  } catch (e) { console.error('[Urban Pot] fetch error:', e); }
+
+  document.getElementById('productLoading').style.display = 'none';
+  if (!food) { document.getElementById('productError').style.display = 'block'; return; }
+  currentFood = food;
+  renderProduct(food);
+})();
+
+/* ─── RENDER ─────────────────────────────────────────── */
+function renderProduct(food) {
+  document.getElementById('productSection').style.display = 'block';
+  document.title = food.name + ' — Urban Pot';
+
+  document.getElementById('productName').textContent     = food.name        || '';
+  document.getElementById('productCategory').textContent = food.category    || '';
+  document.getElementById('productDesc').textContent     = food.description || '';
+  document.getElementById('breadcrumbName').textContent  = food.name        || '';
+  if (food.day) document.getElementById('backToMenu').href = 'menu.html?day=' + food.day;
+
+  // Image
+  var img = document.getElementById('productImg');
+  if (food.image) { img.src = food.image; img.alt = food.name; }
+  else img.style.display = 'none';
+
+  // Base price — from Supabase only
+  var priceEl = document.getElementById('productPrice');
+  if (food.price !== null && food.price !== undefined) {
+    priceEl.innerHTML = 'From ' + fmtN(food.price);
+  } else {
+    priceEl.textContent = 'Price: Unavailable';
+  }
+
+  // Day restriction — specials: category = "special" ONLY
+  var today     = getCurrentDay();
+  var foodDay   = (food.day || '').toLowerCase();
+  var isSpecial = food.category === 'special';
+  var isToday   = isSpecial || !foodDay || foodDay === today;
+  var kitchenOk = isKitchenOpen();
+
+  if (!isToday) {
+    document.getElementById('dayRestrictBanner').style.display = 'block';
+  } else if (!kitchenOk) {
+    document.getElementById('closedBanner').style.display = 'block';
+  }
+
+  var canOrder = isToday && kitchenOk &&
+    food.price !== null && food.price !== undefined;
+
+  buildOptions(food);
+
+  // Show / disable action buttons
+  var actionsEl = document.getElementById('productActions');
+  if (food.price === null || food.price === undefined) {
+    document.getElementById('unavailableNotice').style.display = 'block';
+  } else {
+    actionsEl.style.display = 'grid';
+    var addBtn = document.getElementById('addToCartBtn');
+    var buyBtn = document.getElementById('buyNowBtn');
+    if (!canOrder) {
+      addBtn.disabled = true;
+      buyBtn.disabled = true;
+    } else {
+      addBtn.addEventListener('click', handleAddToCart);
+      buyBtn.addEventListener('click', handleBuyNow);
+    }
+  }
+
+  document.getElementById('priceBreakdown').style.display = 'flex';
+  updateTotal();
+}
+
+/* ─── BUILD OPTIONS ──────────────────────────────────── */
+function buildOptions(food) {
+  var quantityOpts = parseCol(food.quantity_options);
+  var proteinOpts  = parseCol(food.protein_options);
+  var swallowOpts  = parseCol(food.swallow_options);
+
+  // Check if any quantity option is a liter (1L, 2L...)
+  var hasLiters = quantityOpts &&
+    quantityOpts.some(function(q) { return isLiter(q.name || q); });
+
+  // Quantity / size selector
+  if (quantityOpts && quantityOpts.length > 0) {
+    buildQuantitySelector(quantityOpts, hasLiters);
+  }
+
+  // Protein — only if Supabase returned a non-empty array
+  if (proteinOpts && proteinOpts.length > 0) {
+    buildProteinSection(proteinOpts);
+  }
+
+  // Swallow — only if Supabase returned a non-empty array
+  if (swallowOpts && swallowOpts.length > 0) {
+    buildSwallowSection(swallowOpts);
+  }
+
+  // Plates counter:
+  //   YES → liter food (size + plates) or no quantity options (plate only)
+  //   NO  → non-liter units (per bottle, per wrap, per pack...)
+  var showPlates = hasLiters || !quantityOpts;
+  if (showPlates) {
+    buildPlatesCounter();
+  } else {
+    // Non-liter: the quantity selector IS the unit counter
+    // Label updates to "Quantity" — already handled in buildQuantitySelector
+  }
+}
+
+/* ─── QUANTITY SELECTOR ──────────────────────────────── */
+function buildQuantitySelector(opts, hasLiters) {
+  var group = document.getElementById('literGroup');
+  var sel   = document.getElementById('literSelector');
+  var label = group.querySelector('.option-label');
+
+  group.style.display = 'block';
+  label.innerHTML = hasLiters
+    ? 'Size <span class="option-note">(Liters)</span>'
+    : 'Quantity';
+
+  sel.innerHTML = opts.map(function(opt, i) {
+    var name  = opt.name  !== undefined ? opt.name  : String(opt);
+    var price = opt.price !== undefined ? opt.price : 0;
+    return '<button class="liter-btn' + (i === 0 ? ' active' : '') + '"' +
+      ' data-name="' + name + '"' +
+      ' data-price="' + price + '">' +
+      cap(name) +
+      '</button>';
+  }).join('');
+
+  // Default to first option
+  selectedQty = {
+    name:  opts[0].name  !== undefined ? opts[0].name  : String(opts[0]),
+    price: opts[0].price !== undefined ? opts[0].price : 0
+  };
+
+  sel.addEventListener('click', function(e) {
+    var btn = e.target.closest('.liter-btn');
+    if (!btn) return;
+    sel.querySelectorAll('.liter-btn').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    selectedQty = {
+      name:  btn.dataset.name,
+      price: parseInt(btn.dataset.price) || 0
+    };
+    updateTotal();
+  });
+}
+
+/* ─── PLATES COUNTER ─────────────────────────────────── */
+function buildPlatesCounter() {
+  document.getElementById('platesGroup').style.display = 'block';
+
+  document.getElementById('qtyMinus').addEventListener('click', function() {
+    if (plates > 1) {
+      plates--;
+      document.getElementById('qtyDisplay').textContent = plates;
+      updateTotal();
+    }
+  });
+  document.getElementById('qtyPlus').addEventListener('click', function() {
+    plates++;
+    document.getElementById('qtyDisplay').textContent = plates;
+    updateTotal();
+  });
+}
+
+/* ─── PROTEIN SECTION ────────────────────────────────── */
+function buildProteinSection(opts) {
+  var group = document.getElementById('proteinGroup');
+  var grid  = document.getElementById('proteinQtyGrid');
+  group.style.display = 'block';
+  selectedProteins = {};
+
+  grid.innerHTML = opts.map(function(p) {
+    var name  = p.name  !== undefined ? p.name  : String(p);
+    var price = p.price !== undefined ? p.price : 0;
+    var key   = name.toLowerCase();
+    var safe  = key.replace(/\s+/g, '_');
+    selectedProteins[key] = 0;
+
+    return '<div class="protein-qty-row" id="pqr-' + safe + '">' +
+      '<div class="pqr-left">' +
+        '<span class="pqr-name">' + cap(name) + '</span>' +
+        (price > 0 ? '<span class="pqr-price">+' + fmtN(price) + ' each</span>' : '') +
+      '</div>' +
+      '<div class="pqr-ctrl">' +
+        '<button class="pqr-btn" data-key="' + key + '" data-price="' + price + '" data-delta="-1">-</button>' +
+        '<span class="pqr-qty" id="pqrQty-' + safe + '">0</span>' +
+        '<button class="pqr-btn" data-key="' + key + '" data-price="' + price + '" data-delta="1">+</button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  grid.addEventListener('click', function(e) {
+    var btn = e.target.closest('.pqr-btn');
+    if (!btn) return;
+    var key   = btn.dataset.key;
+    var delta = parseInt(btn.dataset.delta);
+    selectedProteins[key] = Math.max(0, Math.min(20,
+      (selectedProteins[key] || 0) + delta));
+    var safe = key.replace(/\s+/g, '_');
+    document.getElementById('pqrQty-' + safe).textContent = selectedProteins[key];
+    document.getElementById('pqr-' + safe)
+      .classList.toggle('has-qty', selectedProteins[key] > 0);
+    updateTotal();
+  });
+}
+
+/* ─── SWALLOW SECTION ────────────────────────────────── */
+function buildSwallowSection(opts) {
+  var group = document.getElementById('swallowGroup');
+  var grid  = document.getElementById('swallowGrid');
+  group.style.display = 'block';
+
+  grid.innerHTML = opts.map(function(s) {
+    var name = s.name !== undefined ? s.name : String(s);
+    return '<button class="swallow-btn" data-swallow="' + name + '">' + cap(name) + '</button>';
+  }).join('');
+
+  grid.addEventListener('click', function(e) {
+    var btn = e.target.closest('.swallow-btn');
+    if (!btn) return;
+    grid.querySelectorAll('.swallow-btn').forEach(function(b) { b.classList.remove('active'); });
+    if (selectedSwallow === btn.dataset.swallow) {
+      selectedSwallow = null;
+    } else {
+      btn.classList.add('active');
+      selectedSwallow = btn.dataset.swallow;
+    }
+  });
+}
+
+/* ─── PRICE CALCULATION ──────────────────────────────── */
+function getBasePrice() {
+  // Selected quantity option price takes priority
+  if (selectedQty && selectedQty.price > 0) return Number(selectedQty.price);
+  // Fallback: food.price (no quantity options = plate price)
+  return (currentFood.price !== null && currentFood.price !== undefined)
+    ? Number(currentFood.price) : 0;
+}
+
+function updateTotal() {
+  if (!currentFood) return;
+
+  var base = getBasePrice();
+
+  // Build protein lines — prices come from protein_options[i].price in Supabase
+  var proteinTotal = 0;
+  var proteinLines = '';
+
+  Object.keys(selectedProteins).forEach(function(key) {
+    var qty = selectedProteins[key];
+    if (qty <= 0) return;
+    // Read price from data attribute on the button (set from Supabase)
+    var btn = document.querySelector('.pqr-btn[data-key="' + key + '"]');
+    var unitPrice = btn ? parseInt(btn.dataset.price) || 0 : 0;
+    var lineTotal = unitPrice * qty;
+    proteinTotal += lineTotal;
+    proteinLines += '<div class="pb-row">' +
+      '<span>' + cap(key) + ' \u00d7' + qty + '</span>' +
+      '<span>+' + fmtN(lineTotal) + '</span>' +
+      '</div>';
+  });
+
+  var total = (base + proteinTotal) * plates;
+
+  document.getElementById('pbBase').textContent      = fmtN(base);
+  document.getElementById('pbProteinRows').innerHTML = proteinLines;
+  document.getElementById('pbTotal').textContent     = fmtN(total);
+}
+
+/* ─── BUILD CART ITEM ────────────────────────────────── */
+function buildCartItem() {
+  var base = getBasePrice();
+
+  var proteins = Object.keys(selectedProteins)
+    .filter(function(key) { return selectedProteins[key] > 0; })
+    .map(function(key) {
+      var qty = selectedProteins[key];
+      var btn = document.querySelector('.pqr-btn[data-key="' + key + '"]');
+      var unitPrice = btn ? parseInt(btn.dataset.price) || 0 : 0;
+      return { type: cap(key), qty: qty, unitPrice: unitPrice };
+    });
+
+  var proteinTotal = proteins.reduce(function(s, p) {
+    return s + p.unitPrice * p.qty;
+  }, 0);
+
+  var total = (base + proteinTotal) * plates;
+
+  // Cart display label — "2L x3 plates" or "per bottle x2" etc
+  var qtyLabel = selectedQty ? selectedQty.name : null;
+
+  return {
+    id:       currentFood.id + '-' + Date.now(),
+    name:     currentFood.name,
+    category: currentFood.category,
+    image:    currentFood.image || null,
+    qtyLabel: qtyLabel,
+    plates:   plates,
+    proteins: proteins,
+    swallow:  selectedSwallow,
+    price:    (typeof total === 'number' && !isNaN(total)) ? total : undefined
+  };
+}
+
+/* ─── CART DISPLAY (override buildCartItemHTML in script.js) ── */
+// This fixes the "PlateL" bug — qtyLabel and plates are now separate
+function buildCartItemHTML(item) {
+  // Build meta tags
+  var tags = '';
+  if (item.qtyLabel) tags += '<span class="ci-meta-tag">' + item.qtyLabel + '</span>';
+  if (item.plates && item.plates > 1) {
+    tags += '<span class="ci-meta-tag">\u00d7' + item.plates + ' plates</span>';
+  }
+  if (item.swallow) tags += '<span class="ci-meta-tag">' + item.swallow + '</span>';
+
+  var proteinTags = '';
+  if (Array.isArray(item.proteins) && item.proteins.length) {
+    proteinTags = item.proteins.map(function(p) {
+      return '<span class="ci-meta-tag">' + p.type + ' \u00d7' + p.qty + '</span>';
+    }).join('');
+  }
+
+  var pd = typeof item.price === 'number' ? fmtN(item.price) : 'Unavailable';
+
+  return '<div class="cart-item">' +
+    '<div class="cart-item-img-wrap">' +
+      (item.image
+        ? '<img src="' + item.image + '" alt="' + item.name + '" class="cart-item-img" loading="lazy"/>'
+        : '<div class="cart-item-img-placeholder"></div>') +
+    '</div>' +
+    '<div class="cart-item-details">' +
+      '<div class="cart-item-name">' + item.name + '</div>' +
+      (tags        ? '<div class="cart-item-meta">' + tags        + '</div>' : '') +
+      (proteinTags ? '<div class="cart-item-meta">' + proteinTags + '</div>' : '') +
+      '<div class="cart-item-price">' + pd + '</div>' +
+    '</div>' +
+    '<button class="cart-item-remove" onclick="removeFromCart(\'' + item.id + '\')">&times;</button>' +
+  '</div>';
+}
+
+/* ─── ACTIONS ────────────────────────────────────────── */
+function handleAddToCart() {
+  if (!canOrderNow()) return;
+  addToCartDirect(buildCartItem());
+  openCart();
+}
+
+function handleBuyNow() {
+  if (!canOrderNow()) return;
+  addToCartDirect(buildCartItem());
+  openCheckout();
+}
+
+function canOrderNow() {
+  if (!isKitchenOpen()) {
+    showToast('Kitchen is closed (9AM\u20134PM only)', 'error');
+    return false;
+  }
+  var today     = getCurrentDay();
+  var foodDay   = (currentFood.day || '').toLowerCase();
+  var isSpecial = currentFood.category === 'special';
+  if (!isSpecial && foodDay && foodDay !== today) {
+    showToast('This item is not available today', 'error');
+    return false;
+  }
+  if (currentFood.price === null || currentFood.price === undefined) {
+    showToast('This item is currently unavailable', 'error');
+    return false;
+  }
+  return true;
+}
+</script>
+</body>
+</html>

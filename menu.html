@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Menu — Urban Pot</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="index.html" class="logo">
+    <svg class="logo-icon" viewBox="0 0 48 48" fill="none">
+      <ellipse cx="24" cy="30" rx="16" ry="12" fill="#C1121F" stroke="#F4A261" stroke-width="1.5"/>
+      <path d="M8 30 Q8 44 24 44 Q40 44 40 30" fill="#780000"/>
+      <rect x="20" y="14" width="8" height="6" rx="2" fill="#F4A261"/>
+      <path d="M16 20 Q24 14 32 20" stroke="#F4A261" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <circle cx="24" cy="28" r="5" fill="#F4A261" opacity="0.3"/>
+    </svg>
+    <span class="logo-text">Urban Pot</span>
+  </a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#menu-grid">Menu</a></li>
+    <li><a href="index.html#category">Category</a></li>
+    <li><a href="index.html#about">About</a></li>
+    <li><a href="index.html#footer">Contact</a></li>
+    <li>
+      <button class="cart-btn" id="cartBtn" aria-label="Open cart">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+
+<!-- DAY SELECTOR -->
+<div class="day-selector-wrap">
+  <div class="day-selector" id="daySelector">
+    <button class="ds-btn" data-day="sunday">Sunday</button>
+    <button class="ds-btn" data-day="monday">Monday</button>
+    <button class="ds-btn" data-day="tuesday">Tuesday</button>
+    <button class="ds-btn" data-day="wednesday">Wednesday</button>
+    <button class="ds-btn" data-day="thursday">Thursday</button>
+    <button class="ds-btn" data-day="friday">Friday</button>
+    <button class="ds-btn" data-day="saturday">Saturday</button>
+    <button class="ds-btn" data-day="special">Specials</button>
+  </div>
+</div>
+
+<div class="menu-page-header">
+  <div class="menu-bg-decoration"></div>
+  <h1 class="menu-day-title" id="menuDayTitle">Today's Menu</h1>
+  <p class="menu-day-sub" id="menuDaySub">Fresh, hot, and made with love</p>
+  <div class="kitchen-status" id="kitchenStatus">
+    <span class="status-dot"></span><span class="status-text">Loading...</span>
+  </div>
+</div>
+
+<section class="menu-list-section">
+  <div class="menu-list" id="menuList">
+    <div class="menu-loading"><div class="spinner"></div><p>Loading menu...</p></div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" id="footer">
+  <div class="footer-box">
+    <div class="footer-logo">
+      <svg class="logo-icon" viewBox="0 0 48 48" fill="none"><ellipse cx="24" cy="30" rx="16" ry="12" fill="#C1121F" stroke="#F4A261" stroke-width="1.5"/><path d="M8 30 Q8 44 24 44 Q40 44 40 30" fill="#780000"/><rect x="20" y="14" width="8" height="6" rx="2" fill="#F4A261"/><path d="M16 20 Q24 14 32 20" stroke="#F4A261" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <strong>Urban Pot</strong>
+    </div>
+    <p class="footer-tagline">Real Nigerian Flavour</p>
+    <div class="footer-divider"></div>
+    <div class="footer-info">
+      <p>Available daily 9AM – 4PM</p>
+      <p><a href="mailto:info@urbanpot.com">info@urbanpot.com</a></p>
+      <p><a href="tel:07048266116">07048266116</a></p>
+    </div>
+    <p class="footer-credit">Website by <a href="mailto:treasuretech005@gmail.com">Treasure Tech</a></p>
+  </div>
+</footer>
+
+<!-- CART PANEL -->
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-panel" id="cartPanel">
+  <div class="cart-header"><h3>Your Order</h3><button class="cart-close" id="cartClose">&times;</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer" id="cartFooter" style="display:none">
+    <div class="cart-summary">
+      <div class="summary-row"><span>Subtotal</span><span id="cartSubtotal">&#8358;0</span></div>
+      <div class="summary-row"><span>Delivery</span><span id="cartDelivery">&#8358;3,500</span></div>
+      <div class="summary-row total"><span>Total</span><span id="cartTotal">&#8358;0</span></div>
+    </div>
+    <button class="btn btn-primary full-btn" id="checkoutBtn">Proceed to Checkout</button>
+  </div>
+  <div class="cart-empty" id="cartEmpty">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+    <p>Your cart is empty</p>
+  </div>
+</aside>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutOverlay" style="display:none">
+  <div class="checkout-modal">
+    <button class="modal-close" id="checkoutClose">&times;</button>
+    <h3>Complete Your Order</h3>
+    <div id="checkoutStep1">
+      <div class="order-summary-list" id="orderSummaryList"></div>
+      <div class="checkout-totals">
+        <div class="summary-row"><span>Subtotal</span><span id="co-subtotal">&#8358;0</span></div>
+        <div class="summary-row"><span>Delivery Fee</span><span id="co-delivery">&#8358;3,500</span></div>
+        <div class="summary-row total"><span>Total</span><span id="co-total">&#8358;0</span></div>
+      </div>
+      <div class="customer-fields">
+        <input type="text"  id="custName"    placeholder="Your Name"        class="field-input"/>
+        <input type="email" id="custEmail"   placeholder="Email Address"    class="field-input"/>
+        <input type="tel"   id="custPhone"   placeholder="Phone Number"     class="field-input"/>
+        <input type="text"  id="custAddress" placeholder="Delivery Address" class="field-input"/>
+      </div>
+      <button class="btn btn-primary full-btn" id="payNowBtn">Pay Now</button>
+    </div>
+    <div id="checkoutSuccess" style="display:none" class="checkout-success">
+      <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#4CAF50" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+      <h4>Payment Successful!</h4><p id="payRef"></p>
+      <button class="btn btn-primary full-btn" id="whatsappBtn">Confirm via WhatsApp</button>
+    </div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script>
+(async function(){
+  const params     = new URLSearchParams(window.location.search);
+  const isCategory = params.has('category');
+  const day        = params.get('category') || params.get('day') || getCurrentDay();
+  const todayDay   = getCurrentDay();
+
+  // Highlight today in day selector
+  document.querySelectorAll('.ds-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.day === day);
+    btn.addEventListener('click', () => window.location.href = `menu.html?day=${btn.dataset.day}`);
+  });
+
+  const titleMap = {
+    sunday:"Sunday's Menu", monday:"Monday's Menu", tuesday:"Tuesday's Menu",
+    wednesday:"Wednesday's Menu", thursday:"Thursday's Menu", friday:"Friday's Menu",
+    saturday:"Saturday's Menu", special:"Chef's Specials",
+    rice:"Rice Dishes", soup:"Soups"
+  };
+  document.getElementById('menuDayTitle').textContent = titleMap[day] || "Today's Menu";
+
+  // 7. Can user order? Only today's day (or category/specials are always orderable if kitchen open)
+  const isToday   = isCategory || day === 'special' || day === todayDay;
+  const canOrder  = isKitchenOpen() && isToday;
+
+  await loadMenuItems(day, isCategory, isToday, canOrder);
+})();
+
+async function loadMenuItems(day, isCategory, isToday, canOrder) {
+  const list = document.getElementById('menuList');
+  try {
+    // Build query
+    let url = `${SUPABASE_URL}/rest/v1/foods?select=*&available=eq.true&order=name`;
+    if (isCategory) {
+      // Category browse — never include specials here (they have their own tab)
+      url += `&category=eq.${day}`;
+    } else if (day === 'special') {
+      // Specials: STRICTLY only foods where category = 'special'
+      url += `&category=eq.special`;
+    } else {
+      // Day menu — also exclude specials so they don't appear twice
+      url += `&day=eq.${day}`;
+    }
+
+    const resp  = await fetch(url, {
+      headers:{ 'apikey':SUPABASE_KEY, 'Authorization':`Bearer ${SUPABASE_KEY}` }
+    });
+    let foods = await resp.json();
+    if (!Array.isArray(foods)) foods = [];
+
+    // Deduplicate: by id first (true DB duplicates), then by name (same dish, multiple rows)
+    const _seenIds   = new Set();
+    const _seenNames = new Set();
+    foods = foods.filter(f => {
+      if (_seenIds.has(f.id))     return false;
+      if (_seenNames.has(f.name)) return false;
+      _seenIds.add(f.id);
+      _seenNames.add(f.name);
+      return true;
+    });
+
+    if (!foods.length) {
+      list.innerHTML = '<div class="no-items"><p>No items available for this selection. Check back later.</p></div>';
+      return;
+    }
+
+    // Warning banners — shown above list, FOOD STILL VISIBLE
+    let banner = '';
+    if (!isToday) {
+      banner = `<div class="day-restrict-banner" style="max-width:800px;margin:0 auto 32px">
+        This menu is not available today. You can only order today's menu.
+        <a href="menu.html?day=${getCurrentDay()}" style="color:var(--gold);font-weight:600;margin-left:6px">View today's menu</a>
+      </div>`;
+    } else if (!isKitchenOpen()) {
+      // 8. Kitchen closed: show food, just note ordering is unavailable
+      banner = `<div class="closed-banner" style="max-width:800px;margin:0 auto 32px">
+        Orders are only accepted between 9AM and 4PM. You can browse the menu but ordering is currently unavailable.
+      </div>`;
+    }
+
+    // 4. Price from Supabase only — no fallback number
+    list.innerHTML = banner + foods.map((food, i) => {
+      const priceDisplay = (food.price !== null && food.price !== undefined)
+        ? `From &#8358;${Number(food.price).toLocaleString()}`
+        : 'Unavailable';
+
+      return `
+        <div class="menu-item ${i%2===1?'reverse':''}" onclick="window.location='product.html?id=${food.id}'">
+          <div class="menu-item-img-wrap">
+            <div class="menu-item-glow"></div>
+            <img data-src="${food.image||''}" alt="${food.name}" class="menu-item-img lazy"
+              src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"/>
+          </div>
+          <div class="menu-item-info">
+            <span class="menu-item-category">${food.category||''}</span>
+            <h3 class="menu-item-name">${food.name}</h3>
+            <p class="menu-item-desc">${food.description||''}</p>
+            <div class="menu-item-price">${priceDisplay}</div>
+            <a href="product.html?id=${food.id}" class="btn btn-primary" onclick="event.stopPropagation()">View Details</a>
+          </div>
+        </div>`;
+    }).join('');
+
+    initLazyLoad();
+  } catch(e) {
+    list.innerHTML = '<div class="no-items"><p>Unable to load menu. Please check your connection.</p></div>';
+    console.error(e);
+  }
+}
+</script>
+</body>
+</html>
