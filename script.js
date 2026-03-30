@@ -334,9 +334,39 @@ document.addEventListener('DOMContentLoaded', () => {
   initCheckout();
   initLazyLoad();
   initScrollAnimations();
+  initKeepAlive();
   if (!document.getElementById('paystackScript')) {
     const ps = document.createElement('script');
     ps.id='paystackScript'; ps.src='https://js.paystack.co/v1/inline.js';
     document.head.appendChild(ps);
   }
 });
+
+/* ─── SUPABASE KEEP-ALIVE ────────────────────────
+   Silently pings Supabase every 4 minutes so the
+   free project never gets paused due to inactivity.
+   Fetches a single row with minimal data — no UI
+   impact, no performance cost.
+   ─────────────────────────────────────────────── */
+function initKeepAlive() {
+  const INTERVAL_MS = 4 * 60 * 1000; // 4 minutes
+
+  function ping() {
+    fetch(
+      SUPABASE_URL + '/rest/v1/foods?select=id&limit=1',
+      {
+        headers: {
+          apikey:        SUPABASE_KEY,
+          Authorization: 'Bearer ' + SUPABASE_KEY
+        }
+      }
+    ).catch(() => {}); // silently ignore any errors
+  }
+
+  // First ping after 1 minute (let page load fully first)
+  setTimeout(() => {
+    ping();
+    // Then ping every 4 minutes after that
+    setInterval(ping, INTERVAL_MS);
+  }, 60 * 1000);
+}
